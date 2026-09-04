@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경기지역본부 대기자 명단 현황</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-light: #3b82f6;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border-color: #e2e8f0;
+            --badge-sub-bg: #fef3c7;
+            --badge-sub-text: #92400e;
+            --badge-doc-bg: #dcfce7;
+            --badge-doc-text: #166534;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+            padding: 8px; /* 모바일 여백 최적화 */
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 헤더 레이아웃 (컴팩트화) */
+        .header {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            margin-bottom: 8px;
+        }
+
+        .header h1 {
+            font-size: 1.15rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stats-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-sub);
+        }
+
+        .stats-badge {
+            background: #eff6ff;
+            color: var(--primary-light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* 검색/필터 영역 (모바일 수직 가나다 배치) */
+        .controls {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+            background-color: var(--card-bg);
+            min-width: 0; /* flex 자식 모바일 넘침 방지 */
+        }
+
+        .filter-select {
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            outline: none;
+            background-color: var(--card-bg);
+            width: 95px;
+        }
+
+        .search-input:focus, .filter-select:focus {
+            border-color: var(--primary-light);
+        }
+
+        /* 테이블 레이아웃 (모바일 폭 최적화) */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.8rem;
+            white-space: normal; /* 모바일에서 텍스트 자동 줄바꿈 적용 */
+            word-break: keep-all;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-main);
+            font-weight: 600;
+            padding: 8px 4px;
+            border-bottom: 1.5px solid var(--border-color);
+            text-align: center;
+            font-size: 0.78rem;
+        }
+
+        td {
+            padding: 8px 4px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* 뱃지 및 디자인 요소 모바일 가독성 증대 */
+        .badge {
+            display: inline-block;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .badge-branch {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .badge-sub {
+            background-color: var(--badge-sub-bg);
+            color: var(--badge-sub-text);
+        }
+
+        .badge-doc {
+            background-color: var(--badge-doc-bg);
+            color: var(--badge-doc-text);
+        }
+
+        .badge-days {
+            background-color: #334155;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .badge-future {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .note-cell {
+            white-space: pre-line;
+            color: var(--text-sub);
+            font-size: 0.75rem;
+            line-height: 1.3;
+            max-width: 130px;
+        }
+
+        /* 스마트폰 가로 폭 줄이기 전용 스타일 */
+        @media (max-width: 600px) {
+            body {
+                padding: 4px;
+            }
+            th, td {
+                padding: 6px 2px;
+            }
+            .note-cell {
+                max-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📋 대기자 명단</h1>
+        <div class="stats-summary">
+            <span>총 인원: <strong id="total-count" class="stats-badge">0명</strong></span>
+            <span>기준일: <strong id="today-date"></strong></span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="이름, 지부, 비고 검색...">
+        <select id="branchFilter" class="filter-select">
+            <option value="">전체지부</option>
+            <option value="본부">본부</option>
+            <option value="남서">남서</option>
+            <option value="남부">남부</option>
+            <option value="북서">북서</option>
+            <option value="북부">북부</option>
+            <option value="동부">동부</option>
+            <option value="서부">서부</option>
+            <option value="중부">중부</option>
+            <option value="용인">용인</option>
+        </select>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 28px;">순번</th>
+                    <th style="width: 42px;">이름</th>
+                    <th style="width: 36px;">지부</th>
+                    <th style="width: 65px;">종료일</th>
+                    <th>비고</th>
+                    <th style="width: 45px;">임대사</th>
+                    <th style="width: 28px;">소형</th>
+                    <th style="width: 28px;">접수</th>
+                    <th style="width: 60px;">대기경과</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+// 엑셀 데이터
+const waitingList = [
+    { seq: 1, name: "문준호", branch: "남서", endDate: "2024-06-21", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 2, name: "장준민", branch: "용인", endDate: "2024-07-31", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 3, name: "백경용", branch: "남서", endDate: "2024-08-03", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 4, name: "이일권", branch: "서부", endDate: "2024-06-19", note: "05-13 평택 사닥다리건설 종료 (소형)", company: "", isSub: "O", isDoc: "" },
+    { seq: 5, name: "양정욱", branch: "남서", endDate: "2024-10-31", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 6, name: "양성호", branch: "남서", endDate: "2024-11-07", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 7, name: "남성우", branch: "본부", endDate: "2026-02-26", note: "간부 인센티브 80%", company: "", isSub: "X", isDoc: "O" },
+    { seq: 8, name: "김재경", branch: "남부", endDate: "2025-03-15", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 9, name: "임광섭", branch: "중부", endDate: "2025-03-24", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 10, name: "김승섭", branch: "북서", endDate: "2025-04-01", note: "03.27~05.29일 수원 세움건설 종료 (소형)", company: "", isSub: "X", isDoc: "" },
+    { seq: 11, name: "김정섭", branch: "북서", endDate: "2025-04-07", note: "", company: "", isSub: "", isDoc: "" },
+    { seq: 12, name: "이우성", branch: "본부", endDate: "2026-04-30", note: "간부 인센티브 80%", company: "", isSub: "X", isDoc: "O" },
+    { seq: 13, name: "강성완", branch: "남부", endDate: "2026-01-15", note: "04.20~08.19 수원 하이안건설 종료 (소형)\n간부 인센티브 50%", company: "", isSub: "O", isDoc: "O" },
+    { seq: 14, name: "이영대", branch: "북부", endDate: "2026-01-16", note: "간부 인센티브 50.1% 사용", company: "", isSub: "X", isDoc: "O" },
+    { seq: 15, name: "박영현", branch: "북서", endDate: "2026-06-20", note: "09.03 시흥 하중 이수건설 이력서 선정\n간부 인센티브 80% 사용", company: "규람타워", isSub: "X", isDoc: "O" },
+    { seq: 16, name: "박민식", branch: "중부", endDate: "2025-05-27", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 17, name: "이윤기", branch: "북부", endDate: "2025-05-27", note: "08.28 수원지역 난방공사 플랜트 이력서 선정", company: "신우개발", isSub: "X", isDoc: "" },
+    { seq: 18, name: "이원길", branch: "동부", endDate: "2025-05-31", note: "수원 더웰건설 (소형), 04.20일 출근~", company: "소형 근무", isSub: "O", isDoc: "" },
+    { seq: 19, name: "김철", branch: "남서", endDate: "2026-02-21", note: "장현디어스 (소형) 05.04일 출근~\n간부 인센티브 50.1%", company: "소형 근무", isSub: "X", isDoc: "O" },
+    { seq: 20, name: "이승희", branch: "서부", endDate: "2025-06-18", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 21, name: "김요학", branch: "북부", endDate: "2025-06-18", note: "09.01 여주 포스코 이력서 선정", company: "한진", isSub: "X", isDoc: "" },
+    { seq: 22, name: "송영준", branch: "서부", endDate: "2025-06-21", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 23, name: "정휘주", branch: "북서", endDate: "2025-06-23", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 24, name: "양용훈", branch: "서부", endDate: "2025-06-28", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 25, name: "전동환", branch: "남서", endDate: "2025-07-11", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 26, name: "송종선", branch: "북부", endDate: "2025-07-12", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 27, name: "임재명", branch: "동부", endDate: "2025-07-12", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 28, name: "진기수", branch: "용인", endDate: "2025-07-12", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 29, name: "이승훈", branch: "북서", endDate: "2025-07-26", note: "서초 업무시설 바론건설 이력서 선정(소형) 04.27일 출근~", company: "소형 근무", isSub: "O", isDoc: "" },
+    { seq: 30, name: "원철규", branch: "동부", endDate: "2025-08-02", note: "09.01 용인 동부건설 기숙사 이력서 선정", company: "규람타워", isSub: "X", isDoc: "" },
+    { seq: 31, name: "이훈", branch: "남서", endDate: "2025-08-11", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 32, name: "김수민", branch: "북부", endDate: "2025-08-19", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 33, name: "김경숙", branch: "중부", endDate: "2025-08-30", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 34, name: "강경희", branch: "중부", endDate: "2025-09-11", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 35, name: "홍대훈", branch: "본부", endDate: "2025-09-25", note: "남사읍 롯데테크 (소형) 07.15일 출근~", company: "소형 근무", isSub: "O", isDoc: "" },
+    { seq: 36, name: "박상완", branch: "북서", endDate: "2024-12-17", note: "안양오피스텔 이인 (소형) 05.26일 출근~\n25-01-06 ~ 25-09-30 병가복귀", company: "소형 근무", isSub: "O", isDoc: "" },
+    { seq: 37, name: "박영환", branch: "북서", endDate: "2025-10-02", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 38, name: "정택영", branch: "중부", endDate: "2025-10-20", note: "24-03-29 ~ 25-10-20 병가복귀", company: "", isSub: "X", isDoc: "" },
+    { seq: 39, name: "유상일", branch: "남부", endDate: "2025-11-17", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 40, name: "윤승일", branch: "북서", endDate: "2025-11-20", note: "08.19 삼성물산 덕성리 데이터센터 이력서 선정", company: "타워랜드", isSub: "O", isDoc: "" },
+    { seq: 41, name: "김윤미", branch: "남서", endDate: "2025-11-22", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 42, name: "정영주", branch: "용인", endDate: "2025-12-01", note: "", company: "", isSub: "X", isDoc: "" },
+    { seq: 43, name: "어선현", branch: "남서", endDate: "2025-10-01", note: "군포 디티엘 종합건설 (소형) 06.04일 출근~\n23년1월 가입자", company: "소형 근무", isSub: "O", isDoc: "" },
+    { seq: 44, name: "김성종", branch: "북부", endDate: "2025-10-08", note: "09.01일 출근~\n08.22 경안종합건설 안양 이력서 선정(소형)\n23년1월 가입자", company: "소형 근무", isSub: "O", isDoc: "O" },
+    { seq: 45, name: "엄기우", branch: "본부", endDate: "2025-11-07", note: "23년1월가입자", company: "", isSub: "O", isDoc: "" },
+    { seq: 46, name: "최상현", branch: "북부", endDate: "2025-11-29", note: "09.04 안양시 미전종합건설 이력서 선정(소형)\n23년1월가입자", company: "", isSub: "O", isDoc: "O" },
+    { seq: 47, name: "박현국", branch: "중부", endDate: "2025-12-05", note: "23년1월가입자", company: "", isSub: "O", isDoc: "" },
+    { seq: 48, name: "정우열", branch: "서부", endDate: "2025-12-31", note: "23년1월가입자", company: "", isSub: "X", isDoc: "O" },
+    { seq: 49, name: "최명성", branch: "서부", endDate: "2026-07-21", note: "간부 인센티브 50.1%", company: "", isSub: "X", isDoc: "O" },
+    { seq: 50, name: "김종준", branch: "남부", endDate: "2026-01-09", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 51, name: "엄동기", branch: "북서", endDate: "2026-07-29", note: "간부 인센티브 50.1%", company: "", isSub: "O", isDoc: "O" },
+    { seq: 52, name: "김진민", branch: "동부", endDate: "2026-01-31", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 53, name: "하성욱", branch: "동부", endDate: "2026-01-30", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 54, name: "이우진", branch: "용인", endDate: "2026-08-24", note: "지부장 간부 인센티브 50.1%", company: "", isSub: "O", isDoc: "" },
+    { seq: 55, name: "김중하", branch: "용인", endDate: "2026-02-04", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 56, name: "진종현", branch: "동부", endDate: "2026-02-05", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 57, name: "조진명", branch: "남서", endDate: "2026-02-11", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 58, name: "김평하", branch: "용인", endDate: "2026-02-23", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 59, name: "최정호", branch: "북서", endDate: "2026-03-04", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 60, name: "김영식", branch: "남부", endDate: "2026-03-06", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 61, name: "이은호", branch: "남서", endDate: "2026-03-06", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 62, name: "박정철", branch: "북부", endDate: "2026-03-18", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 63, name: "정명관", branch: "동부", endDate: "2026-03-25", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 64, name: "서문석", branch: "북서", endDate: "2026-04-03", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 65, name: "김정호", branch: "남서", endDate: "2026-04-06", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 66, name: "김원식", branch: "남부", endDate: "2026-04-08", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 67, name: "박영주", branch: "동부", endDate: "2026-04-11", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 68, name: "황우진", branch: "동부", endDate: "2026-04-15", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 69, name: "유영채", branch: "동부", endDate: "2026-04-15", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 70, name: "김준형", branch: "용인", endDate: "2026-04-18", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 71, name: "박정환", branch: "서부", endDate: "2026-04-21", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 72, name: "김길진", branch: "남부", endDate: "2026-04-21", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 73, name: "이동준", branch: "서부", endDate: "2026-04-23", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 74, name: "김정현", branch: "용인", endDate: "2026-04-25", note: "08.27일 출근~\n08.11 이천 소망종합건설 이력서 선정 (소형)", company: "소형 근무", isSub: "O", isDoc: "O" },
+    { seq: 75, name: "임현창", branch: "용인", endDate: "2026-04-28", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 76, name: "엄기재", branch: "동부", endDate: "2026-04-30", note: "08.31 오산 삼성E&A AMK R&D 센터 이력서 선정", company: "신우개발", isSub: "O", isDoc: "O" },
+    { seq: 77, name: "유종혁", branch: "북부", endDate: "2026-04-30", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 78, name: "문진기", branch: "남부", endDate: "2026-05-04", note: "08.28 평택 P5 야간 철야 이력서 선정", company: "신우개발", isSub: "X", isDoc: "O" },
+    { seq: 79, name: "최형수", branch: "용인", endDate: "2026-05-09", note: "평택 동삭동 우버건설 (소형) 06.10일 출근~\n현장 조기종료 소형타워 50% 취업 인센티브", company: "소형 근무", isSub: "O", isDoc: "O" },
+    { seq: 80, name: "천명환", branch: "용인", endDate: "2026-05-11", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 81, name: "최현재", branch: "남서", endDate: "2026-05-12", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 82, name: "노남수", branch: "서부", endDate: "2026-05-12", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 83, name: "전성준", branch: "용인", endDate: "2026-05-29", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 84, name: "정종덕", branch: "동부", endDate: "2026-05-30", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 85, name: "김형삼", branch: "남서", endDate: "2026-06-01", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 86, name: "오정환", branch: "서부", endDate: "2025-11-21", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 87, name: "윤정희", branch: "남서", endDate: "2026-04-21", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 88, name: "서두석", branch: "남부", endDate: "2026-06-15", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 89, name: "백기경", branch: "용인", endDate: "2026-06-16", note: "08.28 평택 P5 야간 철야 이력서 선정", company: "신우개발", isSub: "O", isDoc: "O" },
+    { seq: 90, name: "박점규", branch: "서부", endDate: "2026-06-17", note: "08.28 평택 P5 야간 철야 이력서 선정", company: "신우개발", isSub: "O", isDoc: "O" },
+    { seq: 91, name: "김상궁", branch: "북서", endDate: "2026-06-26", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 92, name: "임장현", branch: "북부", endDate: "2026-06-27", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 93, name: "백창선", branch: "중부", endDate: "2026-07-03", note: "09.01일 출근~\n08.22 무한건설 안양 이력서 선정(소형)", company: "소형 근무", isSub: "O", isDoc: "O" },
+    { seq: 94, name: "이상건", branch: "북부", endDate: "2026-07-04", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 95, name: "최원영", branch: "북서", endDate: "2026-07-06", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 96, name: "윤대식", branch: "북부", endDate: "2026-07-11", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 97, name: "강의석", branch: "중부", endDate: "2026-07-11", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 98, name: "강태규", branch: "북서", endDate: "2026-07-16", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 99, name: "황도연", branch: "서부", endDate: "2026-05-30", note: "05.31~07.19 병가 복귀", company: "", isSub: "O", isDoc: "O" },
+    { seq: 100, name: "이재성", branch: "동부", endDate: "2026-07-25", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 101, name: "구상모", branch: "북부", endDate: "2026-07-25", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 102, name: "김재선", branch: "북부", endDate: "2026-07-27", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 103, name: "남의송", branch: "남서", endDate: "2026-08-01", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 104, name: "윤성우", branch: "서부", endDate: "2026-08-01", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 105, name: "김주찬", branch: "동부", endDate: "2026-08-01", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 106, name: "최혁", branch: "서부", endDate: "2026-08-08", note: "08.28 평택 P5 야간 철야 이력서 선정", company: "신우개발", isSub: "X", isDoc: "" },
+    { seq: 107, name: "안영진", branch: "북부", endDate: "2026-08-19", note: "", company: "", isSub: "O", isDoc: "O" },
+    { seq: 108, name: "백승진", branch: "동부", endDate: "2026-08-21", note: "08.28 평택 P5 야간 철야 이력서 선정", company: "신우개발", isSub: "O", isDoc: "O" },
+    { seq: 109, name: "배형만", branch: "북서", endDate: "2026-08-22", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 110, name: "서재춘", branch: "북부", endDate: "2026-08-24", note: "", company: "", isSub: "X", isDoc: "O" },
+    { seq: 111, name: "박문철", branch: "본부", endDate: "2026-08-26", note: "", company: "", isSub: "", isDoc: "" },
+    { seq: 112, name: "임대현", branch: "남부", endDate: "2026-08-26", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 113, name: "정민섭", branch: "서부", endDate: "2026-08-29", note: "", company: "", isSub: "", isDoc: "" },
+    { seq: 114, name: "도형래", branch: "서부", endDate: "2026-08-31", note: "", company: "", isSub: "O", isDoc: "" },
+    { seq: 115, name: "강대호", branch: "동부", endDate: "2026-09-02", note: "", company: "", isSub: "", isDoc: "" }
+];
+
+// 대기경과일 계산 (모바일 공간 확보를 위해 단축 형태 제공)
+function calculatePassedDays(endDateStr) {
+    if (!endDateStr) return { text: "-", isFuture: false };
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const endDate = new Date(endDateStr);
+    endDate.setHours(0, 0, 0, 0);
+
+    const diffTime = today - endDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 0) {
+        return { text: `${diffDays}일`, isFuture: false };
+    } else if (diffDays === 0) {
+        return { text: "오늘", isFuture: false };
+    } else {
+        return { text: `-${Math.abs(diffDays)}일`, isFuture: true };
+    }
+}
+
+// 오늘 날짜 표시
+const todayObj = new Date();
+document.getElementById('today-date').innerText = `${todayObj.getFullYear()}.${String(todayObj.getMonth() + 1).padStart(2, '0')}.${String(todayObj.getDate()).padStart(2, '0')}`;
+
+// 테이블 렌더링
+function renderTable(data) {
+    const tableBody = document.getElementById('tableBody');
+    document.getElementById('total-count').innerText = `${data.length}명`;
+    
+    if (data.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; padding: 20px; color: var(--text-sub);">검색 결과가 없습니다.</td></tr>`;
+        return;
+    }
+
+    tableBody.innerHTML = data.map(item => {
+        const daysInfo = calculatePassedDays(item.endDate);
+        const daysBadgeClass = daysInfo.isFuture ? 'badge-future' : 'badge-days';
+
+        return `
+            <tr>
+                <td style="text-align: center; color: var(--text-sub);">${item.seq}</td>
+                <td style="font-weight: 600;">${item.name}</td>
+                <td style="text-align: center;"><span class="badge badge-branch">${item.branch}</span></td>
+                <td style="font-size: 0.75rem; text-align: center;">${item.endDate}</td>
+                <td class="note-cell">${item.note || '-'}</td>
+                <td style="font-size: 0.75rem;">${item.company || '-'}</td>
+                <td style="text-align: center;">
+                    ${item.isSub === 'O' ? '<span class="badge badge-sub">O</span>' : (item.isSub === 'X' ? '<span style="color:#cbd5e1;">X</span>' : '-')}
+                </td>
+                <td style="text-align: center;">
+                    ${item.isDoc === 'O' ? '<span class="badge badge-doc">O</span>' : '-'}
+                </td>
+                <td style="text-align: center;">
+                    <span class="badge ${daysBadgeClass}">${daysInfo.text}</span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// 검색 및 필터링 기능
+function filterData() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
+    const selectedBranch = document.getElementById('branchFilter').value;
+
+    const filtered = waitingList.filter(item => {
+        const daysInfo = calculatePassedDays(item.endDate);
+        const matchesSearch = 
+            item.name.toLowerCase().includes(searchText) ||
+            item.branch.toLowerCase().includes(searchText) ||
+            item.note.toLowerCase().includes(searchText) ||
+            item.company.toLowerCase().includes(searchText) ||
+            daysInfo.text.toLowerCase().includes(searchText);
+
+        const matchesBranch = selectedBranch === '' || item.branch === selectedBranch;
+
+        return matchesSearch && matchesBranch;
+    });
+
+    renderTable(filtered);
+}
+
+document.getElementById('searchInput').addEventListener('input', filterData);
+document.getElementById('branchFilter').addEventListener('change', filterData);
+
+renderTable(waitingList);
+</script>
+
+</body>
+</html>
