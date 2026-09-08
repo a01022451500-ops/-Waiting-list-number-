@@ -108,10 +108,10 @@
   { "seq": 107, "name": "백승진", "branch": "동부", "endDate": "2026-08-21", "note": "08.28 평택 P5 야간 철야 이력서 선정", "company": "신우개발", "isSub": "O", "isDoc": "O" },
   { "seq": 108, "name": "배형만", "branch": "북서", "endDate": "2026-08-22", "note": "", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 109, "name": "서재춘", "branch": "북부", "endDate": "2026-08-24", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
-  { "seq": 110, "name": "박문철", "branch": "본부", "endDate": "2026-08-26", "note": "", "company": "", "isSub": "", "isDoc": "" },
+  { "seq": 110, "name": "박문철", "branch": "본부", "endDate": "2026-08-26", "note": "", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 111, "name": "임대현", "branch": "남부", "endDate": "2026-08-26", "note": "", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 112, "name": "정민섭", "branch": "서부", "endDate": "2026-08-29", "note": "", "company": "", "isSub": "", "isDoc": "" },
   { "seq": 113, "name": "도형래", "branch": "서부", "endDate": "2026-08-31", "note": "", "company": "", "isSub": "O", "isDoc": "" },
-  { "seq": 114, "name": "김상훈", "branch": "서부", "endDate": "2025-11-14", "note": "신규 접수 (2026-09-01)", "company": "", "isSub": "X", "isDoc": "O" },
+  { "seq": 114, "name": "김상훈", "branch": "서부", "endDate": "2025-11-14", "note": "신규 접수 (2026-09-01)", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 115, "name": "강대호", "branch": "동부", "endDate": "2026-09-02", "note": "", "company": "", "isSub": "", "isDoc": "" }
 ]
