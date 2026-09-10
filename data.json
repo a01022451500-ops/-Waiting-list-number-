@@ -55,7 +55,7 @@
   { "seq": 54, "name": "진종현", "branch": "동부", "endDate": "2026-02-05", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 55, "name": "조진명", "branch": "남서", "endDate": "2026-02-11", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 56, "name": "김평하", "branch": "용인", "endDate": "2026-02-23", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
-  { "seq": 57, "name": "김시삼", "branch": "남부", "endDate": "2026-09-08", "note": "간부 인센티브 50.1%", "company": "", "isSub": "", "isDoc": "" },
+  { "seq": 57, "name": "김시삼", "branch": "남부", "endDate": "2026-09-08", "note": "간부 인센티브 50.1%", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 58, "name": "최정호", "branch": "북서", "endDate": "2026-03-04", "note": "", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 59, "name": "김영식", "branch": "남부", "endDate": "2026-03-06", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 60, "name": "이은호", "branch": "남서", "endDate": "2026-03-06", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
@@ -76,7 +76,7 @@
   { "seq": 75, "name": "엄기재", "branch": "동부", "endDate": "2026-04-30", "note": "08.31 오산 삼성E&A AMK R&D 센터 이력서 선정", "company": "신우개발", "isSub": "O", "isDoc": "O" },
   { "seq": 76, "name": "유종혁", "branch": "북부", "endDate": "2026-04-30", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 77, "name": "문진기", "branch": "남부", "endDate": "2026-05-04", "note": "08.28 평택 P5 야간 철야 이력서 선정", "company": "신우개발", "isSub": "X", "isDoc": "O" },
-  { "seq": 78, "name": "최형수", "branch": "용인", "endDate": "2026-05-09", "note": "평택 동삭동 우버건설 (소형) 06.10일 출근~\n현장 조기종료 소형타워 50% 취업 인센티브", "company": "소형 근무", "isSub": "O", "isDoc": "O" },
+  { "seq": 78, "name": "최형수", "branch": "용인", "endDate": "2026-05-09", "note": "평택 동삭동 우버건설 (소형) 06.10일 출근~\n현장 조기종료 소형타워 50% 취업 인센티브\n09월09일종료", "company": "소형 근무", "isSub": "O", "isDoc": "O" },
   { "seq": 79, "name": "천명환", "branch": "용인", "endDate": "2026-05-11", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 80, "name": "최현재", "branch": "남서", "endDate": "2026-05-12", "note": "", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 81, "name": "노남수", "branch": "서부", "endDate": "2026-05-12", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
@@ -110,10 +110,10 @@
   { "seq": 109, "name": "서재춘", "branch": "북부", "endDate": "2026-08-24", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 110, "name": "박문철", "branch": "본부", "endDate": "2026-08-26", "note": "", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 111, "name": "임대현", "branch": "남부", "endDate": "2026-08-26", "note": "", "company": "", "isSub": "O", "isDoc": "" },
-  { "seq": 112, "name": "정민섭", "branch": "서부", "endDate": "2026-08-29", "note": "", "company": "", "isSub": "", "isDoc": "" },
+  { "seq": 112, "name": "정민섭", "branch": "서부", "endDate": "2026-08-29", "note": "", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 113, "name": "도형래", "branch": "서부", "endDate": "2026-08-31", "note": "", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 114, "name": "김상훈", "branch": "서부", "endDate": "2025-11-14", "note": "신규 접수 (2026-09-01)", "company": "", "isSub": "O", "isDoc": "O" },
-  { "seq": 115, "name": "강대호", "branch": "동부", "endDate": "2026-09-02", "note": "", "company": "", "isSub": "", "isDoc": "" },
-  { "seq": 116, "name": "이원열", "branch": "", "endDate": "2026-09-08", "note": "", "company": "", "isSub": "", "isDoc": "" },
-  { "seq": 117, "name": "조삼재", "branch": "동부", "endDate": "2026-09-09", "note": "", "company": "", "isSub": "", "isDoc": "" }
+  { "seq": 115, "name": "강대호", "branch": "동부", "endDate": "2026-09-02", "note": "", "company": "", "isSub": "O", "isDoc": "" },
+  { "seq": 116, "name": "이원열", "branch": "", "endDate": "2026-09-08", "note": "", "company": "", "isSub": "O", "isDoc": "" },
+  { "seq": 117, "name": "조삼재", "branch": "동부", "endDate": "2026-09-09", "note": "", "company": "", "isSub": "X", "isDoc": "" }
 ]
