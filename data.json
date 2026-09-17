@@ -10,7 +10,7 @@
   { "seq": 9, "name": "임광섭", "branch": "중부", "endDate": "2025-03-24", "note": "", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 10, "name": "김승섭", "branch": "북서", "endDate": "2025-04-01", "note": "03.27~05.29일 수원 세움건설 종료 (소형)", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 11, "name": "김정섭", "branch": "북서", "endDate": "2025-04-07", "note": "", "company": "", "isSub": "", "isDoc": "" },
-  { "seq": 12, "name": "이우성", "branch": "본부", "endDate": "2026-04-30", "note": "간부 인센티브 80%", "company": "", "isSub": "X", "isDoc": "O" },
+  { "seq": 12, "name": "이우성", "branch": "본부", "endDate": "2026-04-30", "note": "광주효성 이력서선정 예림타워, 간부 인센티브 80%", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 13, "name": "강성완", "branch": "남부", "endDate": "2026-01-15", "note": "04.20~08.19 수원 하이안건설 종료 (소형) 간부 인센티브 50%", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 14, "name": "이영대", "branch": "북부", "endDate": "2026-01-16", "note": "오산 내삼 미동 GS건설 국영타워 이력서선정, 간부 인센티브 50.1% 사용", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 15, "name": "박민식", "branch": "중부", "endDate": "2025-05-27", "note": "", "company": "", "isSub": "X", "isDoc": "" },
