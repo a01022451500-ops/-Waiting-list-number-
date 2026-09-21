@@ -39,7 +39,7 @@
   { "seq": 38, "name": "어선현", "branch": "남서", "endDate": "2025-10-01", "note": "군포 디티엘 종합건설 (소형) 06.04일 출근~ 23년1월 가입자", "company": "소형 근무", "isSub": "O", "isDoc": "" },
   { "seq": 39, "name": "김성종", "branch": "북부", "endDate": "2025-10-08", "note": "09.01일 출근~ 08.22 경안종합건설 안양 이력서 선정(소형) 23년1월 가입자", "company": "소형 근무", "isSub": "O", "isDoc": "O" },
   { "seq": 40, "name": "엄기우", "branch": "본부", "endDate": "2025-11-07", "note": "23년1월가입자", "company": "", "isSub": "O", "isDoc": "" },
-  { "seq": 41, "name": "최상현", "branch": "북부", "endDate": "2025-11-29", "note": "09.04 안양시 미전종합건설 이력서 선정(소형) 23년1월가입자", "company": "", "isSub": "O", "isDoc": "O" },
+  { "seq": 41, "name": "최상현", "branch": "북부", "endDate": "2025-11-29", "note": "미전종합건설 출근 (09월 19일부터)", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 42, "name": "박현국", "branch": "중부", "endDate": "2025-12-05", "note": "23년1월가입자", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 43, "name": "정우열", "branch": "서부", "endDate": "2025-12-31", "note": "23년1월가입자", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 44, "name": "최명성", "branch": "서부", "endDate": "2026-07-21", "note": "간부 인센티브 50.1%", "company": "", "isSub": "X", "isDoc": "O" },
