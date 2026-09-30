@@ -16,7 +16,7 @@
   { "seq": 15, "name": "김철", "branch": "남서", "endDate": "2026-02-21", "note": "장현 디어스이앤씨 (소형) 05.04~09.30 소형현장근무완료", "company": "소형 근무", "isSub": "X", "isDoc": "O" },
   { "seq": 16, "name": "송영준", "branch": "서부", "endDate": "2025-06-21", "note": "", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 17, "name": "정휘주", "branch": "북서", "endDate": "2025-06-23", "note": "시흥거모 호반건설 이력서 선정", "company": "", "isSub": "X", "isDoc": "" },
-  { "seq": 18, "name": "양용훈", "branch": "서부", "endDate": "2025-06-28", "note": "", "company": "", "isSub": "X", "isDoc": "" },
+  { "seq": 18, "name": "양용훈", "branch": "서부", "endDate": "2025-06-28", "note": "거모동 모아엘가 이력서 선정", "company": "금강건기", "isSub": "X", "isDoc": "" },
   { "seq": 19, "name": "전동환", "branch": "남서", "endDate": "2025-07-11", "note": "", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 20, "name": "송종선", "branch": "북부", "endDate": "2025-07-12", "note": "능동계룡 이력서 선정", "company": "동양타워", "isSub": "X", "isDoc": "" },
   { "seq": 21, "name": "임재명", "branch": "동부", "endDate": "2025-07-12", "note": "", "company": "", "isSub": "X", "isDoc": "" },
