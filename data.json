@@ -35,7 +35,7 @@
   { "seq": 34, "name": "정우열", "branch": "서부", "endDate": "2025-12-31", "note": "23년1월가입자", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 35, "name": "최명성", "branch": "서부", "endDate": "2026-07-21", "note": "간부 인센티브 50.1%", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 36, "name": "엄동기", "branch": "북서", "endDate": "2026-07-29", "note": "유림2청사 출근 (10월 01일부터), 간부 인센티브 50.1%", "company": "소형 근무", "isSub": "O", "isDoc": "O" },
-  { "seq": 37, "name": "김진민", "branch": "동부", "endDate": "2026-01-31", "note": "소형 제이에이치 이력서 선정", "company": "", "isSub": "O", "isDoc": "O" },
+  { "seq": 37, "name": "김진민", "branch": "동부", "endDate": "2026-01-31", "note": "제이에이치(소형) 출근 10월1일~", "company": "", "isSub": "O", "isDoc": "O" },
   { "seq": 38, "name": "하성욱", "branch": "동부", "endDate": "2026-01-30", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 39, "name": "진종현", "branch": "동부", "endDate": "2026-02-05", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
   { "seq": 40, "name": "조진명", "branch": "남서", "endDate": "2026-02-11", "note": "", "company": "", "isSub": "X", "isDoc": "O" },
