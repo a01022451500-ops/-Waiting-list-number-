@@ -104,5 +104,6 @@
   { "seq": 103, "name": "박성우", "branch": "남서", "endDate": "2026-10-02", "note": "인계동 대흥 10월12일출근~", "company": "", "isSub": "O", "isDoc": "" },
   { "seq": 104, "name": "김효진", "branch": "남부", "endDate": "2026-10-08", "note": "", "company": "", "isSub": "X", "isDoc": "" },
   { "seq": 105, "name": "임한종", "branch": "서부", "endDate": "2026-10-12", "note": "", "company": "", "isSub": "X", "isDoc": "" },
-  { "seq": 106, "name": "권희복", "branch": "동부", "endDate": "2026-10-14", "note": "", "company": "", "isSub": "X", "isDoc": "" }
+  { "seq": 106, "name": "권희복", "branch": "동부", "endDate": "2026-10-14", "note": "", "company": "", "isSub": "X", "isDoc": "" },
+  { "seq": 107, "name": "박종선", "branch": "남서", "endDate": "2026-10-15", "note": "병가시작 16일부터~", "company": "", "isSub": "", "isDoc": "" }
 ]
